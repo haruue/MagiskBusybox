@@ -5,3 +5,7 @@ MODDIR=${0%/*}
 
 # This script will be executed in post-fs-data mode
 # More info in the main Magisk thread
+cd $MODDIR/system/xbin
+tar xf symbol-links.tar
+rm symbol-links.tar
+cd $OLDPWD
