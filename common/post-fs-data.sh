@@ -2,6 +2,7 @@
 # Please don't hardcode /magisk/modname/... ; instead, please use $MODDIR/...
 # This will make your scripts compatible even if Magisk change its mount point in the future
 MODDIR=${0%/*}
+MIRROR_DIR="/dev/magisk/mirror"
 
 # This script will be executed in post-fs-data mode
 
@@ -9,17 +10,9 @@ MODDIR=${0%/*}
 cd $MODDIR/system/xbin
 
 # Merge origin files in /system/xbin
-echo "Merging origin /system/xbin..."
-for f in /system/xbin/*; do 
-    LINK=$(readlink $f)
-    if [ "$LINK" == "" -a "$f" != "/system/xbin/busybox" -o "$LINK" != "/system/xbin/busybox" -a "$f" != "/system/xbin/busybox" ]; then
-        echo "copying" "$f"
-        cp -a "$f" .
-    fi
-done
+cp -a $MIRROR_DIR/system/xbin/* .
 
 # Create symbol links for busybox
-echo "Creating symbol-links..."
 tar xvf symbol-links.tar
 rm symbol-links.tar
 
