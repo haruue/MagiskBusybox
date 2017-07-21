@@ -1,8 +1,6 @@
 # Magisk Busybox
 Add it back as a module after Magisk just removed busybox option.
 
-All provided busybox pre-built files was download from https://www.busybox.net/downloads/binaries/
-
 ## Installation
 1. Download your platform version from https://github.com/haruue/MagiskBusybox/releases/latest
 2. Magisk Manager -> Module -> `+` button -> choose downloaded file
