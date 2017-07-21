@@ -9,17 +9,17 @@ STATIC_FILE_LIST=META-INF/com/google/android/update-binary META-INF/com/google/a
 
 $(DOWNLOAD_DIR)/%:
 	mkdir -p $(DOWNLOAD_DIR)
-	wget -c $(DOWNLOAD_URL_PREFIX)/$(notdir $@) -O $@
+	wget -c $(DOWNLOAD_URL_PREFIX)/$* -O $@
 
 $(OUTPUT_DIR)/%.zip: $(DOWNLOAD_DIR)/% $(STATIC_FILE_LIST) _module.prop
 	mkdir -p $(OUTPUT_DIR)
-	sed "s/armv6l/$(patsubst busybox-%.zip,%,$(notdir $@))/g" _module.prop > module.prop
+	sed "s/armv6l/$(patsubst busybox-%,%,$*)/g" _module.prop > module.prop
 	zip -u $@ module.prop
 	rm module.prop
 	for f in $(STATIC_FILE_LIST); do \
 		zip -u $@ $$f; \
 	done
-	install -Dm755 $(DOWNLOAD_DIR)/$(patsubst %.zip,%,$(notdir $@)) system/xbin/busybox
+	install -Dm755 $(DOWNLOAD_DIR)/$* system/xbin/busybox
 	zip -u $@ system/xbin/busybox
 	rm system/xbin/busybox
 
